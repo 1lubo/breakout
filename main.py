@@ -2,7 +2,9 @@
 
 from ast import While
 from tkinter.messagebox import NO
+from turtle import Screen
 import pygame
+from paddle import Paddle
 
 pygame.init()
 
@@ -21,6 +23,17 @@ lives = 3
 size = (800,600)
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption("Breakout Game")
+
+# this will be a list that will contain all the sprites we intend to use
+all_sprites_list = pygame.sprite.Group()
+
+# create the paddle
+paddle = Paddle(LIGHTBLUE, 100, 10)
+paddle.rect.x = 350
+paddle.rect.y = 560
+
+# add the paddle to the list of sprites
+all_sprites_list.add(paddle)
 
 # the look will carry on until the user eists the game (e.g. clicks the close button)
 carryOn = True
@@ -49,6 +62,9 @@ while carryOn:
     screen.blit(text, (20,10))
     text = font.render("Lives: "+ str(lives), 1, WHITE)
     screen.blit(text, (650,10))
+
+    # draw all the sprites
+    all_sprites_list.draw(screen)
 
     # --- update the screen with what we've drawn
     pygame.display.flip()
