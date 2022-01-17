@@ -5,6 +5,7 @@ from tkinter.messagebox import NO
 from turtle import Screen, update
 import pygame
 from paddle import Paddle
+from ball import Ball
 
 pygame.init()
 
@@ -32,8 +33,14 @@ paddle = Paddle(LIGHTBLUE, 100, 10)
 paddle.rect.x = 350
 paddle.rect.y = 560
 
+# create the ball sprite
+ball = Ball(WHITE, 10, 10)
+ball.rect.x = 345
+ball.rect.y = 195
+
 # add the paddle to the list of sprites
 all_sprites_list.add(paddle)
+all_sprites_list.add(ball)
 
 # the look will carry on until the user eists the game (e.g. clicks the close button)
 carryOn = True
@@ -56,6 +63,22 @@ while carryOn:
 
     # --- game logic
     all_sprites_list(update)
+
+    # check if the ball is bouncing against any of the 4 walls:
+    if ball.rect.x >= 790:
+        ball.velocity[0] = -ball.velocity[0]
+    if ball.rect.x <= 0:
+        ball.velocity[0] = -ball.velocity[0]
+    if ball.rect.y > 590:
+        ball.velocity[1] = -ball.velocity[1]
+    if ball.rect.y < 40:
+        ball.velocity[1] = -ball.velocity[1]
+
+    # detect collisions between the ball and the paddles
+    if pygame.sprite.collide_mask(ball, paddle):
+        ball.rect.x -= ball.velocity[0]
+        ball.rect.y -= ball.velocity[1]
+        ball.bounce()
 
     
     # --- drawing code goes here
