@@ -2,7 +2,7 @@
 
 from ast import While
 from tkinter.messagebox import NO
-from turtle import Screen
+from turtle import Screen, update
 import pygame
 from paddle import Paddle
 
@@ -48,7 +48,14 @@ while carryOn:
         if event.type == pygame.QUIT: # if user clicked close
             carryOn = False # flag what we are done so we exit this loop
 
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_LEFT]:
+        paddle.moveLeft(5)
+    if keys[pygame.K_RIGHT]:
+        paddle.moveRight(5)
+
     # --- game logic
+    all_sprites_list(update)
 
     
     # --- drawing code goes here
