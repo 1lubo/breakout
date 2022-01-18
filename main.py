@@ -62,7 +62,7 @@ while carryOn:
         paddle.moveRight(5)
 
     # --- game logic
-    all_sprites_list(update)
+    all_sprites_list.update()
 
     # check if the ball is bouncing against any of the 4 walls:
     if ball.rect.x >= 790:
